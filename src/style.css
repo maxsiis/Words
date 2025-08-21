@@ -1,7 +1,17 @@
 :root {
+  --primary-bg: #f0f4f8;
+  --button-bg: #008bfe;
+  --text-primary: #ffffff;
+  --font: 'Roboto', sans-serif;
+}
+
+body {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: var(--primary-bg);
 }
-
