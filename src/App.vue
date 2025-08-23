@@ -10,7 +10,7 @@ function FlipCard(card) {
 </script>
 
 <template>
-  <!-- <Card @flipCard="FlipCard" /> -->
+  <Card @flipCard="FlipCard" />
   <div>
     <Score :score="score" />
     <div class="app-container">
