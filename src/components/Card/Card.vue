@@ -1,4 +1,11 @@
 <script setup>
+const props = defineProps({
+  word: String,
+  translation: String,
+  state: Boolean,
+  status: String,
+});
+
 const emit = defineEmits(['flipCard', 'statusChange']);
 
 const Flip = () => {
@@ -12,7 +19,7 @@ const changeStaus = () => {
 
 <template>
   <div class="card">
-    <span class="words">Pollinatio</span>
+    <span class="words">{{ word }}</span>
     <div class="card-border">
       <span class="number">01</span>
       <span class="text" @click="Flip">Перевернуть</span>
