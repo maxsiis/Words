@@ -9,7 +9,7 @@ const data = ref({
   word: 'Carom',
   translation: 'Свинец',
   state: false,
-  status: 'success' | 'fail' | 'pending',
+  status: 'pending',
 });
 
 function FlipCard(card) {
