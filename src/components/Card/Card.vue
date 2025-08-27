@@ -1,4 +1,6 @@
 <script setup>
+import SuccessIcon from '../../icons/SuccessIcon.vue';
+import FailedIcon from '../../icons/FailedIcon.vue';
 const props = defineProps({
   word: String,
   translation: String,
@@ -18,11 +20,33 @@ const changeStaus = () => {
 </script>
 
 <template>
-  <div class="card">
-    <span class="words">{{ word }}</span>
+  <div class="card" v-if="props.status === 'pending'">
+    <span class="words">{{ props.state ? translation : word }}</span>
     <div class="card-border">
       <span class="number">01</span>
-      <span class="text" @click="Flip">Перевернуть</span>
+      <div class="text-flip" v-if="props.state === false">
+        <span class="text" @click="Flip">Перевернуть</span>
+      </div>
+      <div class="button-flip" v-else>
+        <failed-icon class="button-upper" />
+        <success-icon class="button-upper" />
+      </div>
+    </div>
+  </div>
+  <div class="card" v-else-if="props.status === 'success'">
+    <span class="words">{{ translation }}</span>
+    <div class="card-border">
+      <success-icon class="text-upper" />
+      <span class="number">01</span>
+      <span class="text" @click="Flip">Завершено</span>
+    </div>
+  </div>
+  <div class="card" v-else-if="props.status === 'failed'">
+    <span class="words">{{ translation }}</span>
+    <div class="card-border">
+      <failed-icon class="text-upper" />
+      <span class="number">01</span>
+      <span class="text" @click="Flip">Завершено</span>
     </div>
   </div>
 </template>
@@ -62,7 +86,27 @@ const changeStaus = () => {
   font-weight: 400;
   color: #222222;
 }
-
+.text-upper {
+  position: absolute;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.button-flip {
+  position: absolute;
+  top: 308px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  gap: 33px;
+  background: var(--text-primary);
+}
+.button-upper {
+  width: 20px;
+  height: 20px;
+}
 .text {
   position: absolute;
   top: 311px; /* Половина высоты текста */
