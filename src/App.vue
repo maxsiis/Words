@@ -5,13 +5,14 @@ import Card from './components/Card/Card.vue';
 import { computed, ref } from 'vue';
 
 const score = ref(100);
-const data = ref();
+const data = ref([]);
 const error = ref();
 
 const displayGame = ref(false);
 const displayButton = ref(true);
 
-function showGame() {
+async function showGame() {
+  await getWord();
   displayGame.value = true;
   displayButton.value = false;
   console.log('карты показаны');
