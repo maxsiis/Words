@@ -1,52 +1,54 @@
 <script setup>
 import SuccessIcon from '../../icons/SuccessIcon.vue';
 import FailedIcon from '../../icons/FailedIcon.vue';
+
 const props = defineProps({
-  word: String,
-  translation: String,
-  state: Boolean,
-  status: String,
+  word: { type: String, required: true },
+  translation: { type: String, required: true },
+  state: { type: Boolean, required: true },
+  status: { type: String, required: true },
+  index: { type: Number, required: true },
 });
 
-const emit = defineEmits(['flipCard', 'statusChange']);
+const emit = defineEmits(['flip-card', 'status-change']);
 
-const Flip = () => {
-  emit('flipCard', 'Карта перевернута');
-};
-
-const changeStaus = () => {
-  emit('statusChange', 'Статус изменен');
-};
+const flip = () => emit('flip-card', { index: props.index });
+const changeStatus = (s) =>
+  emit('status-change', { index: props.index, status: s });
 </script>
 
 <template>
-  <div class="card" v-if="props.status === 'pending'">
-    <span class="words">{{ props.state ? translation : word }}</span>
+  <div class="card" v-if="status === 'pending'">
+    <span class="words">{{ state ? translation : word }}</span>
     <div class="card-border">
       <span class="number">01</span>
-      <div class="text-flip" v-if="props.state === false">
-        <span class="text" @click="Flip">Перевернуть</span>
+
+      <div v-if="!state" class="text-flip">
+        <span class="text" @click="flip">Перевернуть</span>
       </div>
-      <div class="button-flip" v-else>
-        <failed-icon class="button-upper" />
-        <success-icon class="button-upper" />
+
+      <div v-else class="button-flip">
+        <FailedIcon class="button-upper" @click="changeStatus('failed')" />
+        <SuccessIcon class="button-upper" @click="changeStatus('success')" />
       </div>
     </div>
   </div>
-  <div class="card" v-else-if="props.status === 'success'">
+
+  <div class="card" v-else-if="status === 'success'">
     <span class="words">{{ translation }}</span>
     <div class="card-border">
-      <success-icon class="text-upper" />
+      <SuccessIcon class="text-upper" />
       <span class="number">01</span>
-      <span class="text" @click="Flip">Завершено</span>
+      <span class="text">Завершено</span>
     </div>
   </div>
-  <div class="card" v-else-if="props.status === 'failed'">
+
+  <div class="card" v-else>
     <span class="words">{{ translation }}</span>
     <div class="card-border">
-      <failed-icon class="text-upper" />
+      <FailedIcon class="text-upper" />
       <span class="number">01</span>
-      <span class="text" @click="Flip">Завершено</span>
+      <span class="text">Завершено</span>
     </div>
   </div>
 </template>
